@@ -10,12 +10,20 @@ class newTaskScreen extends StatefulWidget {
   State<newTaskScreen> createState() => _newTaskScreenState();
 }
 
-TextEditingController taskNameController = TextEditingController(text: "task name");
-TextEditingController taskDescriptionController = TextEditingController(text: "task descr");
+TextEditingController taskNameController =
+    TextEditingController(text: "task name");
+TextEditingController taskDescriptionController =
+    TextEditingController(text: "task descr");
 TextEditingController taskDeadlineController = TextEditingController();
 TextEditingController taskPriorityController = TextEditingController();
 
 class _newTaskScreenState extends State<newTaskScreen> {
+  @override
+  void initState() {
+    super.initState();
+    taskPriorityController.text = 'Medium'; // Значение по умолчанию
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,6 +62,11 @@ class _newTaskScreenState extends State<newTaskScreen> {
               FormBuilderChipOption(value: 'Medium', child: Text('Medium')),
               FormBuilderChipOption(value: 'High', child: Text('High')),
             ],
+            initialValue: "Medium",
+            onChanged: (value) {
+              taskPriorityController.text = value.toString();
+              print("Selected priority: $taskPriorityController");
+            },
           ),
         ],
       ),
@@ -75,7 +88,6 @@ class _newTaskScreenState extends State<newTaskScreen> {
           taskDeadlineController;
         },
         child: Icon(Icons.add),
-
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:to_do_app_hive/models/task_model.dart';
+import 'package:to_do_app_hive/screens/edit_task_screen.dart';
 import 'package:to_do_app_hive/screens/new_task_screen.dart';
 import '../screens/tasks_screen.dart';
 
@@ -49,8 +50,9 @@ class MyApp extends StatelessWidget {
       // home: const HomePage(),
       // home: newTaskScreen(),
       routes: {
-        '/' : (context) => HomePage(),
-        '/tasks_screen' : (context) => newTaskScreen(),
+        '/': (context) => HomePage(),
+        '/tasks_screen': (context) => newTaskScreen(),
+        '/edit_screen': (context) => EditTaskScreen(),
       },
     );
   }

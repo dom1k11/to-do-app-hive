@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_app_hive/models/task_model.dart';
+import 'package:to_do_app_hive/task_service.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Открываем коробку один раз при загрузке
+    Hive.openBox<Task>('tasksBox');
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Task List"),
@@ -15,20 +20,10 @@ class HomePage extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: FutureBuilder(
-            future: Hive.openBox<Task>('tasksBox'), // Ожидаем, пока откроется коробка
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                // Если коробка ещё не открыта
-                return const Center(child: CircularProgressIndicator());
-              }
-
-              if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              }
-
-              final box = Hive.box<Task>('tasksBox');
-              final tasks = box.values.toList(); // Получаем все задачи из коробки
+          child: ValueListenableBuilder(
+            valueListenable: Hive.box<Task>('tasksBox').listenable(),
+            builder: (context, Box<Task> box, _) {
+              final tasks = box.values.toList();
 
               if (tasks.isEmpty) {
                 return const Center(child: Text('No tasks available.'));
@@ -40,12 +35,32 @@ class HomePage extends StatelessWidget {
                   final task = tasks[index];
 
                   return ListTile(
+                    // leading: FormBuilderCheckbox(name: '', title: SizedBox(),),
                     title: Text(task.taskName),
-                    subtitle: Text(task.taskDescription),
-                    trailing: Text(DateFormat('yyyy-MM-dd').format(task.taskDeadline)),
-                    // onTap: () {
-                    //   // Здесь можно добавить логику для открытия подробностей задачи
-                    // },
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(task.taskPriority),
+                        Text(task.taskDescription),
+                        Text(
+                            DateFormat('yyyy-MM-dd').format(task.taskDeadline)),
+                      ],
+                    ),
+                    trailing: Column(
+                      children: [
+                        // Отображение срока выполнения задачи
+
+                        IconButton(
+                          onPressed: () {
+                            deleteTask(index); // Удаление задачи
+                          },
+                          icon: const Icon(Icons.delete),
+                        ),
+                      ],
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/edit_screen');
+                    },
                   );
                 },
               );
