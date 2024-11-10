@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:to_do_app_hive/models/task_model.dart';
-import 'package:to_do_app_hive/task_service.dart';
+import 'package:to_do_app_hive/widgets/task_list_tile.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -32,35 +30,10 @@ class HomePage extends StatelessWidget {
               return ListView.builder(
                 itemCount: tasks.length,
                 itemBuilder: (context, index) {
-                  final task = tasks[index];
-
-                  return ListTile(
-                    // leading: FormBuilderCheckbox(name: '', title: SizedBox(),),
-                    title: Text(task.taskName),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(task.taskPriority),
-                        Text(task.taskDescription),
-                        Text(
-                            DateFormat('yyyy-MM-dd').format(task.taskDeadline)),
-                      ],
-                    ),
-                    trailing: Column(
-                      children: [
-                        // Отображение срока выполнения задачи
-
-                        IconButton(
-                          onPressed: () {
-                            deleteTask(index); // Удаление задачи
-                          },
-                          icon: const Icon(Icons.delete),
-                        ),
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.pushNamed(context, '/edit_screen');
-                    },
+                  final oneTask = tasks[index];
+                  return TaskTile(
+                    task: oneTask,
+                    index: index,
                   );
                 },
               );

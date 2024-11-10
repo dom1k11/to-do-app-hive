@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:to_do_app_hive/models/task_model.dart';
 import 'package:to_do_app_hive/screens/edit_task_screen.dart';
@@ -52,7 +51,10 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => HomePage(),
         '/tasks_screen': (context) => newTaskScreen(),
-        '/edit_screen': (context) => EditTaskScreen(),
+        '/edit_screen': (context) {
+          final task = ModalRoute.of(context)?.settings.arguments as Task; // Получаем объект Task
+          return EditTaskScreen(task: task); // Передаем его в EditTaskScreen
+        },
       },
     );
   }
