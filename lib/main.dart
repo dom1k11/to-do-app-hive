@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
       // home: newTaskScreen(),
       routes: {
         '/': (context) => HomePage(),
-        '/tasks_screen': (context) => newTaskScreen(),
+        '/tasks_screen': (context) => NewTaskScreen(),
         '/edit_screen': (context) {
           final task = ModalRoute.of(context)?.settings.arguments as Task; // Получаем объект Task
           return EditTaskScreen(task: task); // Передаем его в EditTaskScreen

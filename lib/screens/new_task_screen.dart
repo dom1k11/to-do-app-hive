@@ -4,85 +4,115 @@ import 'package:intl/intl.dart';
 import 'package:to_do_app_hive/contollers/form_controllers.dart';
 import 'package:to_do_app_hive/task_service.dart';
 
-class newTaskScreen extends StatefulWidget {
-  const newTaskScreen({super.key});
+class NewTaskScreen extends StatefulWidget {
+  const NewTaskScreen({super.key});
 
   @override
-  State<newTaskScreen> createState() => _newTaskScreenState();
+  State<NewTaskScreen> createState() => _NewTaskScreenState();
+
 }
 
-
-
-class _newTaskScreenState extends State<newTaskScreen> {
+class _NewTaskScreenState extends State<NewTaskScreen> {
+  final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    super.initState();
-    // taskNameController = TextEditingController(text: "New");
-    // taskDescriptionController = TextEditingController(text: "Task");
-    // taskPriorityController.text = 'Medium'; // Значение по умолчанию
 
+    taskDescriptionController.text = "No Description";
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Column(
-        children: [
-          FormBuilderTextField(
-            controller: taskNameController,
-            name: 'Task Name',
-            decoration: InputDecoration(
-              label: Text("Task Name"),
-            ),
-
-          ),
-          FormBuilderTextField(
-            controller: taskDescriptionController,
-            name: 'Task Description',
-            decoration: InputDecoration(
-              label: Text("Task Description"),
-            ),
-          ),
-          FormBuilderDateTimePicker(
-            controller: taskDeadlineController,
-            name: 'taskDeadline',
-            firstDate: DateTime.now(),
-            lastDate: DateTime.now().add(Duration(days: 365)),
-            initialDate: DateTime.now(),
-            inputType: InputType.date,
-            decoration: InputDecoration(
-              label: Text("Task Deadline"),
-            ),
-          ),
-          FormBuilderChoiceChip(
-            name: 'priority',
-            decoration: InputDecoration(labelText: 'Priority'),
-            options: [
-              FormBuilderChipOption(value: 'Low', child: Text('Low')),
-              FormBuilderChipOption(value: 'Medium', child: Text('Medium')),
-              FormBuilderChipOption(value: 'High', child: Text('High')),
+      appBar: AppBar(title: Text("New Task")),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              FormBuilderTextField(
+                controller: taskNameController,
+                name: 'Task Name',
+                decoration: InputDecoration(
+                  helperText: "Task name required",
+                  label: Text("Task Name"),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter a task name";
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              FormBuilderTextField(
+                controller: taskDescriptionController,
+                name: 'Task Description',
+                decoration: InputDecoration(
+                  label: Text("Task Description"),
+                ),
+              ),
+              const SizedBox(height: 16),
+              FormBuilderDateTimePicker(
+                controller: taskDeadlineController,
+                name: 'taskDeadline',
+                firstDate: DateTime.now(),
+                lastDate: DateTime.now().add(Duration(days: 365)),
+                initialDate: DateTime.now(),
+                inputType: InputType.date,
+                decoration: InputDecoration(
+                  label: Text("Task Deadline"),
+                  helperText: "Deadline required",
+                ),
+                validator: (value) {
+                  if (value == null) {
+                    return "Please select a deadline";
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              FormBuilderChoiceChip(
+                name: 'priority',
+                decoration: InputDecoration(labelText: 'Priority', helperText: "Priority required",),
+                options: [
+                  FormBuilderChipOption(value: 'Low', child: Text('Low')),
+                  FormBuilderChipOption(value: 'Medium', child: Text('Medium')),
+                  FormBuilderChipOption(value: 'High', child: Text('High')),
+                ],
+                onChanged: (value) {
+                  taskPriorityController.text = value.toString();
+                },
+                validator: (value) {
+                  if (value == null) {
+                    return "Please select a priority";
+                  }
+                  return null;
+                },
+              ),
             ],
-            // initialValue: "Medium",
-            onChanged: (value) {
-              taskPriorityController.text = value.toString();
-              print("Selected priority: $taskPriorityController");
-            },
           ),
-        ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          final dateFormat = DateFormat("MM/dd/yyyy"); // Указываем формат
-          final taskDeadline = dateFormat.parse(taskDeadlineController.text);
-          // Передаем данные из контроллеров в функцию addTask
-          addTask(
-            taskNameController.text,
-            taskDescriptionController.text,
-            taskDeadline, // Преобразуем строку в DateTime
-            taskPriorityController.text,
-          );
-          Navigator.pop(context);
+          if (_formKey.currentState?.validate() ?? false) {
+            // Если форма валидна, выполняем действие
+            final dateFormat = DateFormat("MM/dd/yyyy");
+            final taskDeadline = dateFormat.parse(taskDeadlineController.text);
+
+            addTask(
+              taskNameController.text,
+              taskDescriptionController.text,
+              taskDeadline,
+              taskPriorityController.text,
+            );
+
+            Navigator.pop(context);
+          } else {
+            // Если форма невалидна
+            print("Form is not valid. Please fill in all fields.");
+          }
         },
         child: Icon(Icons.add),
       ),
