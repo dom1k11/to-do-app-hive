@@ -33,21 +33,34 @@ Future<void> deleteTask(int index) async {
   print("Task at index $index deleted");
 }
 
+Future<void> setCompleted(int index) async {
+  final tasksBox = Hive.box<Task>('tasksBox');
+  final completedTasksBox = Hive.box<Task>('completedTasksBox');
+  final newTask = tasksBox.getAt(index);
+  if(newTask != null){
+    completedTasksBox.add(newTask);
+    tasksBox.deleteAt(index);
+  }
+  print("task marked as completed, $index");
+
+
+}
+
 Future<void> editTask(int index) async {
   final tasksBox = Hive.box<Task>('tasksBox');
 
   // Получаем задачу по индексу
-  final task = tasksBox.getAt(index);
+  final newTask = tasksBox.getAt(index);
 
-  if (task != null) {
+  if (newTask != null) {
     // Обновляем поля задачи новыми значениями из контроллеров
-    task.taskName = taskNameController.text;
-    task.taskDescription = taskDescriptionController.text;
-    task.taskDeadline = DateFormat("MM/dd/yyyy").parse(taskDeadlineController.text);
-    task.taskPriority = taskPriorityController.text;
+    newTask.taskName = taskNameController.text;
+    newTask.taskDescription = taskDescriptionController.text;
+    newTask.taskDeadline = DateFormat("MM/dd/yyyy").parse(taskDeadlineController.text);
+    newTask.taskPriority = taskPriorityController.text;
 
     // Сохраняем изменения в Hive
-    await tasksBox.putAt(index, task);
+    await tasksBox.putAt(index, newTask);
 
     // Очищаем контроллеры после сохранения
     taskNameController.clear();
@@ -56,3 +69,4 @@ Future<void> editTask(int index) async {
     taskPriorityController.clear();
   }
 }
+

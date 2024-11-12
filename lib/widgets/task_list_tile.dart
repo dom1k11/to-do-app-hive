@@ -25,7 +25,7 @@ class TaskTile extends StatelessWidget {
         children:  [
           // A SlidableAction can have an icon and/or a label.
           SlidableAction(
-            onPressed: (context) {},
+            onPressed: (context) {setCompleted(index);},
             backgroundColor: Color(0xFF32EE25),
             foregroundColor: Colors.white,
             icon: Icons.done,
