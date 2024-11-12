@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:to_do_app_hive/models/task_model.dart';
+import 'package:to_do_app_hive/screens/done_tasks_screen.dart';
 import 'package:to_do_app_hive/screens/edit_task_screen.dart';
 import 'package:to_do_app_hive/screens/new_task_screen.dart';
 import '../screens/tasks_screen.dart';
@@ -49,12 +50,14 @@ class MyApp extends StatelessWidget {
       // home: const HomePage(),
       // home: newTaskScreen(),
       routes: {
-        '/': (context) => HomePage(),
-        '/tasks_screen': (context) => NewTaskScreen(),
+        '/': (context) => const HomePage(),
+        '/tasks_screen': (context) => const NewTaskScreen(),
         '/edit_screen': (context) {
           final task = ModalRoute.of(context)?.settings.arguments as Task; // Получаем объект Task
           return EditTaskScreen(task: task); // Передаем его в EditTaskScreen
+
         },
+        '/done_tasks_screen': (context) => const DoneTasksScreen()
       },
     );
   }

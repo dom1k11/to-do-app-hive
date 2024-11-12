@@ -14,6 +14,11 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Task List"),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/done_tasks_screen');
+            },
+            icon: Icon(Icons.done_all)),
       ),
       body: SafeArea(
         child: Padding(
