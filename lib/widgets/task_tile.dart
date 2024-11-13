@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:to_do_app_hive/models/task_model.dart';
 import 'package:to_do_app_hive/task_service.dart';
 
-class TaskTile extends StatelessWidget {
+class TaskTile extends StatefulWidget {
   final Task task;
   final int index;
 
@@ -17,61 +17,90 @@ class TaskTile extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Slidable(
-      startActionPane: ActionPane(
-        motion: const ScrollMotion(),
-        // dismissible: DismissiblePane(onDismissed: () {}),
-        children:  [
-          // A SlidableAction can have an icon and/or a label.
-          SlidableAction(
-            onPressed: (context) {setCompleted(index);},
-            backgroundColor: Color(0xFF32EE25),
-            foregroundColor: Colors.white,
-            icon: Icons.done,
-            label: 'Complete',
-          ),
-        ],
-      ),
-      endActionPane: ActionPane(
-        motion: const ScrollMotion(),
-        children:  [
-          // A SlidableAction can have an icon and/or a label.
-          SlidableAction(
-            onPressed: (context) { deleteTask(index);},
-            backgroundColor: Color(0xFFFE4A49),
-            foregroundColor: Colors.white,
-            icon: Icons.delete,
-            label: 'Delete',
-          ),
-        ],
-      ),
-      child: ListTile(
-        leading: Icon(Icons.arrow_right, color: Colors.green,),
+  State<TaskTile> createState() => _TaskTileState();
+}
 
-        title: Text(task.taskName),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+class _TaskTileState extends State<TaskTile> {
+  bool _visible = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedOpacity(
+      opacity: _visible ? 1.0 : 0.0,
+      duration: Duration(milliseconds: 500),
+      child: Slidable(
+        startActionPane: ActionPane(
+          motion: const ScrollMotion(),
+          // dismissible: DismissiblePane(onDismissed: () {}),
           children: [
-            Text(task.taskPriority),
-            Text(task.taskDescription),
-            Text(DateFormat("MM/dd/yyyy").format(task.taskDeadline)),
+            // A SlidableAction can have an icon and/or a label.
+            SlidableAction(
+              onPressed: (context) {
+                setState(() {
+                  _visible = !_visible;
+                });
+
+                Future.delayed(Duration(milliseconds: 500), () {
+                  setCompleted(widget.index);
+                });
+
+              },
+              backgroundColor: Color(0xFF32EE25),
+              foregroundColor: Colors.white,
+              icon: Icons.done,
+              label: 'Complete',
+            ),
           ],
         ),
-        trailing: IconButton(
-          onPressed: () {
-            deleteTask(index); // Удаление задачи
-          },
-          icon: const Icon(Icons.arrow_left, color: Colors.red,),
+        endActionPane: ActionPane(
+          motion: const ScrollMotion(),
+          children: [
+            // A SlidableAction can have an icon and/or a label.
+            SlidableAction(
+              onPressed: (context) {
+                setState(() {
+                  _visible = !_visible;
+                });
+                Future.delayed(Duration(milliseconds: 500), () {
+                  deleteTask(widget.index);
+                });
+              },
+              backgroundColor: Color(0xFFFE4A49),
+              foregroundColor: Colors.white,
+              icon: Icons.delete,
+              label: 'Delete',
+            ),
+          ],
         ),
-        onTap: () {
-          Navigator.pushNamed(
-            context,
-            '/edit_screen',
-            arguments: {'task': task, 'index': index}, // Передаем задачу и индекс
-          );
-        },
-
+        child: ListTile(
+          leading: Icon(
+            Icons.arrow_right,
+            color: Colors.green,
+          ),
+          title: Text(widget.task.taskName),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(widget.task.taskPriority),
+              Text(widget.task.taskDescription),
+              Text(DateFormat("MM/dd/yyyy").format(widget.task.taskDeadline)),
+            ],
+          ),
+          trailing: Icon(
+            Icons.arrow_left,
+            color: Colors.red,
+          ),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              '/edit_screen',
+              arguments: {
+                'task': widget.task,
+                'index': widget.index
+              }, // Передаем задачу и индекс
+            );
+          },
+        ),
       ),
     );
   }
