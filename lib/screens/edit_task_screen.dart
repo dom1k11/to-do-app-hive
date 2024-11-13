@@ -25,13 +25,13 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   }
 
   @override
-  void dispose() {
-    taskNameController.dispose();
-    taskDescriptionController.dispose();
-    taskDeadlineController.dispose();
-    taskPriorityController.dispose();
-    super.dispose();
-  }
+  // void dispose() {
+  //   taskNameController.dispose();
+  //   taskDescriptionController.dispose();
+  //   taskDeadlineController.dispose();
+  //   taskPriorityController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +86,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
 
-          // editTask(index); // Вызов метода редактирования с передачей индекса
+           // editTask(index); // Вызов метода редактирования с передачей индекса
 
           Navigator.pop(context);
         },

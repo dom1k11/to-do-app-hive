@@ -18,6 +18,8 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   void initState() {
 
     taskDescriptionController.text = "No Description";
+    taskNameController.text = "New Task Name";
+    taskDeadlineController.text = DateFormat("MM/dd/yyyy").format(DateTime.now());
   }
 
   @override

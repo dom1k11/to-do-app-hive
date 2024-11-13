@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:to_do_app_hive/models/task_model.dart';
-import 'package:to_do_app_hive/widgets/task_list_tile.dart';
+import 'package:to_do_app_hive/widgets/task_tile.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
