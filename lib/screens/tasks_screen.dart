@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:to_do_app_hive/models/task_model.dart';
-import 'package:to_do_app_hive/widgets/custom_fab.dart';
 import 'package:to_do_app_hive/widgets/task_tile.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class TasksScreen extends StatefulWidget {
+  const TasksScreen({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<TasksScreen> createState() => _TasksScreenState();
 }
 
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin {
   late AnimationController _rotationController;
   late AnimationController _expansionController;
   late Animation<double> _rotationAnimation;
   late Animation<double> _expansionAnimation;
+  bool _isVisible = false; // Флаг для управления видимостью кнопки
   bool _isExpanded = false; // Флаг для отслеживания состояния кнопки
 
   @override
@@ -23,25 +23,27 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.initState();
 
     // Контроллер для анимации вращения
-    _rotationController = AnimationController(duration: Duration(milliseconds: 500), vsync: this);
-    _rotationAnimation = Tween<double>(begin: 0, end: 2 * 3.1415927 * 2).animate(
-      CurvedAnimation(parent: _rotationController, curve: Curves.linearToEaseOut),
+    _rotationController = AnimationController(
+      duration: Duration(milliseconds: 1500),
+      vsync: this,
+    );
+    _rotationAnimation = Tween<double>(begin: 0, end: 2 * 3.1415927 * 3).animate(
+      CurvedAnimation(parent: _rotationController, curve: Curves.ease),
     );
 
     // Контроллер для анимации расширения кнопки
-    _expansionController = AnimationController(duration: Duration(milliseconds: 400), vsync: this);
+    _expansionController = AnimationController(
+      duration: Duration(milliseconds: 500),
+      vsync: this,
+    );
     _expansionAnimation = Tween<double>(begin: 56.0, end: 200.0).animate(
-      CurvedAnimation(parent: _expansionController, curve: Curves.bounceOut),
+      CurvedAnimation(parent: _expansionController, curve: Curves.easeOut),
     );
 
-    // Запускаем анимацию вращения
-    _rotationController.forward().then((_) {
-      // После завершения вращения запускаем анимацию расширения кнопки
-      Future.delayed(Duration(milliseconds: 250), () {
-        setState(() {
-          _isExpanded = true;
-          _expansionController.forward(); // Запускаем расширение кнопки
-        });
+    // Задержка перед началом появления кнопки
+    Future.delayed(Duration(milliseconds: 500), () {
+      setState(() {
+        _isVisible = true; // Показываем кнопку через AnimatedOpacity
       });
     });
   }
@@ -62,10 +64,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       appBar: AppBar(
         title: const Text("Task List"),
         leading: IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/done_tasks_screen');
-            },
-            icon: const Icon(Icons.done_all)),
+          onPressed: () {
+            Navigator.pushNamed(context, '/done_tasks_screen');
+          },
+          icon: const Icon(Icons.done_all),
+        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -93,29 +96,42 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ),
         ),
       ),
-      floatingActionButton: AnimatedBuilder(
-        animation: Listenable.merge([_rotationController, _expansionController]),
-        builder: (BuildContext context, Widget? child) {
-          return Transform.rotate(
-            angle: _rotationAnimation.value, // Применяем вращение
-            child: Container(
-              width: _expansionAnimation.value, // Плавное расширение
-              child: FloatingActionButton.extended(
-                label: _isExpanded
-                    ? FadeTransition(
-                  opacity: _expansionController,
-                  child: const Text("Create Task"),
-                )
-                    : SizedBox.shrink(), // Показываем текст только если кнопка расширена
-                icon: const Icon(Icons.edit_note_outlined),
-                backgroundColor: Colors.greenAccent,
-                onPressed: () {
-                  Navigator.pushNamed(context, '/new_task_screen');
-                },
-              ),
-            ),
-          );
+      floatingActionButton: AnimatedOpacity(
+        opacity: _isVisible ? 1 : 0, // Плавное появление кнопки
+        duration: Duration(milliseconds: 500),
+        onEnd: () {
+          // После появления кнопки запускаем остальные анимации
+          _rotationController.forward().then((_) {
+            setState(() {
+              _isExpanded = true; // Обновляем состояние для расширения кнопки
+              _expansionController.forward();
+            });
+          });
         },
+        child: AnimatedBuilder(
+          animation: Listenable.merge([_rotationController, _expansionController]),
+          builder: (BuildContext context, Widget? child) {
+            return Transform.rotate(
+              angle: _rotationAnimation.value, // Применяем вращение
+              child: Container(
+                width: _expansionAnimation.value, // Плавное расширение
+                child: FloatingActionButton.extended(
+                  label: _isExpanded
+                      ? FadeTransition(
+                    opacity: _expansionController,
+                    child: const Text("Create Task"),
+                  )
+                      : SizedBox.shrink(), // Показываем текст только если кнопка расширена
+                  icon: const Icon(Icons.edit_note_outlined),
+                  backgroundColor: Colors.greenAccent,
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/new_task_screen');
+                  },
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
