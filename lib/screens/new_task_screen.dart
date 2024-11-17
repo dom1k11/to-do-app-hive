@@ -25,7 +25,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("New Task")),
+      appBar: AppBar(title: const Text("New Task")),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -35,7 +35,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
               FormBuilderTextField(
                 controller: taskNameController,
                 name: 'Task Name',
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   helperText: "Task name required",
                   label: Text("Task Name"),
                 ),
@@ -50,7 +50,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
               FormBuilderTextField(
                 controller: taskDescriptionController,
                 name: 'Task Description',
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   label: Text("Task Description"),
                 ),
               ),
@@ -59,10 +59,10 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                 controller: taskDeadlineController,
                 name: 'taskDeadline',
                 firstDate: DateTime.now(),
-                lastDate: DateTime.now().add(Duration(days: 365)),
+                lastDate: DateTime.now().add(const Duration(days: 365)),
                 initialDate: DateTime.now(),
                 inputType: InputType.date,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   label: Text("Task Deadline"),
                   helperText: "Deadline required",
                 ),
@@ -76,8 +76,8 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
               const SizedBox(height: 16),
               FormBuilderChoiceChip(
                 name: 'priority',
-                decoration: InputDecoration(labelText: 'Priority', helperText: "Priority required",),
-                options: [
+                decoration: const InputDecoration(labelText: 'Priority', helperText: "Priority required",),
+                options: const [
                   FormBuilderChipOption(value: 'Low', child: Text('Low')),
                   FormBuilderChipOption(value: 'Medium', child: Text('Medium')),
                   FormBuilderChipOption(value: 'High', child: Text('High')),
@@ -116,7 +116,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
             print("Form is not valid. Please fill in all fields.");
           }
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

@@ -10,13 +10,15 @@ class TasksScreen extends StatefulWidget {
   State<TasksScreen> createState() => _TasksScreenState();
 }
 
-class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin {
+class _TasksScreenState extends State<TasksScreen>
+    with TickerProviderStateMixin {
   late AnimationController _rotationController;
   late AnimationController _expansionController;
   late Animation<double> _rotationAnimation;
   late Animation<double> _expansionAnimation;
   bool _isVisible = false; // Флаг для управления видимостью кнопки
   bool _isExpanded = false; // Флаг для отслеживания состояния кнопки
+  double _opacity = 0.0;
 
   @override
   void initState() {
@@ -24,16 +26,17 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
 
     // Контроллер для анимации вращения
     _rotationController = AnimationController(
-      duration: Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
-    _rotationAnimation = Tween<double>(begin: 0, end: 2 * 3.1415927 * 3).animate(
+    _rotationAnimation =
+        Tween<double>(begin: 0, end: 2 * 3.1415927 * 3).animate(
       CurvedAnimation(parent: _rotationController, curve: Curves.ease),
     );
 
     // Контроллер для анимации расширения кнопки
     _expansionController = AnimationController(
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       vsync: this,
     );
     _expansionAnimation = Tween<double>(begin: 56.0, end: 200.0).animate(
@@ -41,9 +44,15 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
     );
 
     // Задержка перед началом появления кнопки
-    Future.delayed(Duration(milliseconds: 500), () {
+    Future.delayed(const Duration(milliseconds: 500), () {
       setState(() {
         _isVisible = true; // Показываем кнопку через AnimatedOpacity
+      });
+    });
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      setState(() {
+        _opacity = 1.0;
       });
     });
   }
@@ -79,7 +88,24 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
               final tasks = box.values.toList();
 
               if (tasks.isEmpty) {
-                return const Center(child: Text('No tasks available.'));
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: AnimatedOpacity(
+                        opacity: _opacity,
+                        duration: const Duration(milliseconds: 2000),
+                        child: const Text(
+                          "You don't have any tasks, want to add a new one?",
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
               }
 
               return ListView.builder(
@@ -98,7 +124,7 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
       ),
       floatingActionButton: AnimatedOpacity(
         opacity: _isVisible ? 1 : 0, // Плавное появление кнопки
-        duration: Duration(milliseconds: 500),
+        duration: const Duration(milliseconds: 500),
         onEnd: () {
           // После появления кнопки запускаем остальные анимации
           _rotationController.forward().then((_) {
@@ -109,19 +135,21 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
           });
         },
         child: AnimatedBuilder(
-          animation: Listenable.merge([_rotationController, _expansionController]),
+          animation:
+              Listenable.merge([_rotationController, _expansionController]),
           builder: (BuildContext context, Widget? child) {
             return Transform.rotate(
               angle: _rotationAnimation.value, // Применяем вращение
-              child: Container(
+              child: SizedBox(
                 width: _expansionAnimation.value, // Плавное расширение
                 child: FloatingActionButton.extended(
                   label: _isExpanded
                       ? FadeTransition(
-                    opacity: _expansionController,
-                    child: const Text("Create Task"),
-                  )
-                      : SizedBox.shrink(), // Показываем текст только если кнопка расширена
+                          opacity: _expansionController,
+                          child: const Text("Create Task"),
+                        )
+                      : const SizedBox.shrink(),
+                  // Показываем текст только если кнопка расширена
                   icon: const Icon(Icons.edit_note_outlined),
                   backgroundColor: Colors.greenAccent,
                   onPressed: () {

@@ -14,7 +14,7 @@ class _DoneTasksScreenState extends State<DoneTasksScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Done Tasks"),
+        title: const Text("Done Tasks"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -34,7 +34,7 @@ class _DoneTasksScreenState extends State<DoneTasksScreen> {
                 return ListTile(
                   title: Text(task.taskName),
                   subtitle: Text(task.taskDescription),
-                  trailing: Icon(Icons.check, color: Colors.green),
+                  trailing: const Icon(Icons.check, color: Colors.green),
                 );
               },
             );

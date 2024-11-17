@@ -27,7 +27,7 @@ class _TaskTileState extends State<TaskTile> {
   Widget build(BuildContext context) {
     return AnimatedOpacity(
       opacity: _visible ? 1.0 : 0.0,
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       child: Slidable(
         startActionPane: ActionPane(
           motion: const ScrollMotion(),
@@ -40,12 +40,12 @@ class _TaskTileState extends State<TaskTile> {
                   _visible = !_visible;
                 });
 
-                Future.delayed(Duration(milliseconds: 500), () {
+                Future.delayed(const Duration(milliseconds: 500), () {
                   setCompleted(widget.index);
                 });
 
               },
-              backgroundColor: Color(0xFF32EE25),
+              backgroundColor: const Color(0xFF32EE25),
               foregroundColor: Colors.white,
               icon: Icons.done,
               label: 'Complete',
@@ -61,11 +61,11 @@ class _TaskTileState extends State<TaskTile> {
                 setState(() {
                   _visible = !_visible;
                 });
-                Future.delayed(Duration(milliseconds: 500), () {
+                Future.delayed(const Duration(milliseconds: 500), () {
                   deleteTask(widget.index);
                 });
               },
-              backgroundColor: Color(0xFFFE4A49),
+              backgroundColor: const Color(0xFFFE4A49),
               foregroundColor: Colors.white,
               icon: Icons.delete,
               label: 'Delete',
@@ -73,7 +73,7 @@ class _TaskTileState extends State<TaskTile> {
           ],
         ),
         child: ListTile(
-          leading: Icon(
+          leading: const Icon(
             Icons.arrow_right,
             color: Colors.green,
           ),
@@ -86,7 +86,7 @@ class _TaskTileState extends State<TaskTile> {
               Text(DateFormat("MM/dd/yyyy").format(widget.task.taskDeadline)),
             ],
           ),
-          trailing: Icon(
+          trailing: const Icon(
             Icons.arrow_left,
             color: Colors.red,
           ),

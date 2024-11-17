@@ -53,28 +53,50 @@ class MyApp extends StatelessWidget {
       // home: const HomePage(),
       // home: newTaskScreen(),
       routes: {
-        '/': (context) => const WelcomeScreen(),
-        // '/tasks_screen': (context) => TasksScreen(),
-        '/new_task_screen': (context) => const NewTaskScreen(),
+        '/': (context) => const WelcomeScreen(), // Начальный экран
+        // '/new_task_screen': (context) => const NewTaskScreen(),
         '/edit_screen': (context) {
-          final task = ModalRoute.of(context)?.settings.arguments
-              as Task; // Получаем объект Task
-          return EditTaskScreen(task: task); // Передаем его в EditTaskScreen
+          final task = ModalRoute.of(context)?.settings.arguments as Task;
+          return EditTaskScreen(task: task);
         },
-        '/done_tasks_screen': (context) => const DoneTasksScreen()
       },
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/tasks_screen':
             return PageTransition(
-              child: TasksScreen(),
+              child: const TasksScreen(),
               type: PageTransitionType.rightToLeftWithFade,
               curve: Curves.easeInOut,
-              duration: Duration(milliseconds: 500),
-              reverseDuration: Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 500),
+              reverseDuration: const Duration(milliseconds: 500),
               opaque: true,
             );
-            break;
+          case '/done_tasks_screen': // Добавляем обработку перехода на DoneTasksScreen
+            return PageTransition(
+              child: const DoneTasksScreen(),
+              type: PageTransitionType.leftToRightWithFade,
+              // Анимация справа налево
+              curve: Curves.easeInOut,
+              // Плавное изменение
+              duration: const Duration(milliseconds: 500),
+              // Длительность
+              reverseDuration: const Duration(milliseconds: 500),
+              // Длительность обратной анимации
+              opaque: true,
+            );
+          case '/new_task_screen': // Добавляем обработку перехода на DoneTasksScreen
+            return PageTransition(
+              child: const NewTaskScreen(),
+              type: PageTransitionType.rightToLeftWithFade,
+              // Анимация справа налево
+              curve: Curves.easeInOut,
+              // Плавное изменение
+              duration: const Duration(milliseconds: 500),
+              // Длительность
+              reverseDuration: const Duration(milliseconds: 500),
+              // Длительность обратной анимации
+              opaque: true,
+            );
           default:
             return null;
         }

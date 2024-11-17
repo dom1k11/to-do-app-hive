@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 class CustomElevatedButton extends StatefulWidget {
   const CustomElevatedButton({super.key});
 
@@ -12,7 +11,7 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton> {
 
   @override
   void initState() {
-   Future.delayed(Duration(milliseconds: 500), () { //change to 1000*3
+   Future.delayed(const Duration(milliseconds: 1000*3), () {
      setState(() {
        _opacity = 1.0;
      });
@@ -20,20 +19,21 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton> {
    );
     super.initState();
   }
+  @override
   Widget build(BuildContext context) {
     return AnimatedOpacity(
       opacity: _opacity,
-      duration: Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 1000),
       curve: Curves.easeInSine,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Color.fromARGB(255, 135, 137, 192),
-          foregroundColor: Color.fromARGB(255, 34, 34, 49),
+          backgroundColor: const Color.fromARGB(255, 135, 137, 192),
+          foregroundColor: const Color.fromARGB(255, 34, 34, 49),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
           elevation: 12,
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
             fontStyle: FontStyle.italic,
           ),
         ),

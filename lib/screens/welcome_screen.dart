@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app_hive/widgets/custom_elevated_button.dart';
-import 'package:to_do_app_hive/widgets/custom_fab.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -16,12 +15,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   void initState() {
-    Future.delayed(Duration(milliseconds: 1000), () {
+    Future.delayed(const Duration(milliseconds: 1000), () {
       setState(() {
         _textOpacity = 1.0;
       });
     });
-    Future.delayed(Duration(milliseconds: 1000 * 2), () {
+    Future.delayed(const Duration(milliseconds: 1000 * 2), () {
       setState(() {
         _secondTextOpacity = 1.0;
       });
@@ -29,6 +28,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -40,23 +40,21 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  AnimatedOpacity(
-                    opacity: _textOpacity,
-                    duration: Duration(milliseconds: 1000),
-                    child: Text("Hello"),
-                  ),
-                  AnimatedOpacity(
-                    opacity: _secondTextOpacity,
-                    duration: Duration(milliseconds: 1000),
-                    child: const Text("Welcome to my app"),
-                  ),
-                ],
-              ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                AnimatedOpacity(
+                  opacity: _textOpacity,
+                  duration: const Duration(milliseconds: 1000),
+                  child: const Text("Hello", style: TextStyle(fontSize: 48),),
+                ),
+                AnimatedOpacity(
+                  opacity: _secondTextOpacity,
+                  duration: const Duration(milliseconds: 1000),
+                  child: const Text("Welcome to my app", style: TextStyle(fontSize: 24),),
+                ),
+              ],
             ),
             Container(
               margin: const EdgeInsets.only(top: 30),
