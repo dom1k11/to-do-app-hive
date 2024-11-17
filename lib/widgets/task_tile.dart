@@ -35,20 +35,21 @@ class _TaskTileState extends State<TaskTile> {
           children: [
             // A SlidableAction can have an icon and/or a label.
             SlidableAction(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(8),
+                bottomLeft: Radius.circular(8),
+              ),
               onPressed: (context) {
                 setState(() {
                   _visible = !_visible;
                 });
-
                 Future.delayed(const Duration(milliseconds: 500), () {
                   setCompleted(widget.index);
                 });
-
               },
               backgroundColor: const Color(0xFF32EE25),
               foregroundColor: Colors.white,
               icon: Icons.done,
-              label: 'Complete',
             ),
           ],
         ),
@@ -57,6 +58,10 @@ class _TaskTileState extends State<TaskTile> {
           children: [
             // A SlidableAction can have an icon and/or a label.
             SlidableAction(
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(8),
+                bottomRight: Radius.circular(8),
+              ),
               onPressed: (context) {
                 setState(() {
                   _visible = !_visible;
@@ -68,7 +73,6 @@ class _TaskTileState extends State<TaskTile> {
               backgroundColor: const Color(0xFFFE4A49),
               foregroundColor: Colors.white,
               icon: Icons.delete,
-              label: 'Delete',
             ),
           ],
         ),
@@ -77,13 +81,24 @@ class _TaskTileState extends State<TaskTile> {
             Icons.arrow_right,
             color: Colors.green,
           ),
-          title: Text(widget.task.taskName),
+          title: Text(
+            widget.task.taskName,
+          ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(widget.task.taskPriority),
-              Text(widget.task.taskDescription),
-              Text(DateFormat("MM/dd/yyyy").format(widget.task.taskDeadline)),
+              Text(
+                widget.task.taskPriority,
+
+              ),
+              Text(
+                widget.task.taskDescription,
+
+              ),
+              Text(
+                DateFormat("MM/dd/yyyy").format(widget.task.taskDeadline),
+
+              ),
             ],
           ),
           trailing: const Icon(
@@ -105,4 +120,3 @@ class _TaskTileState extends State<TaskTile> {
     );
   }
 }
-

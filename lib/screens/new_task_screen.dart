@@ -9,17 +9,17 @@ class NewTaskScreen extends StatefulWidget {
 
   @override
   State<NewTaskScreen> createState() => _NewTaskScreenState();
-
 }
 
 class _NewTaskScreenState extends State<NewTaskScreen> {
   final _formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
-
     taskDescriptionController.text = "No Description";
     taskNameController.text = "New Task Name";
-    taskDeadlineController.text = DateFormat("MM/dd/yyyy").format(DateTime.now());
+    taskDeadlineController.text =
+        DateFormat("MM/dd/yyyy").format(DateTime.now());
   }
 
   @override
@@ -36,9 +36,11 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                 controller: taskNameController,
                 name: 'Task Name',
                 decoration: const InputDecoration(
-                  helperText: "Task name required",
-                  label: Text("Task Name"),
-                ),
+                    border: InputBorder.none,
+                    // helperText: "Task name required",
+                    label: Text("Task Name"),
+
+                    prefixIcon: Icon(Icons.edit_note_outlined)),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "Please enter a task name";
@@ -46,15 +48,21 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                   return null;
                 },
               ),
-              const SizedBox(height: 16),
+              Divider(
+                color: Colors.grey,
+              ),
               FormBuilderTextField(
                 controller: taskDescriptionController,
                 name: 'Task Description',
                 decoration: const InputDecoration(
-                  label: Text("Task Description"),
-                ),
+                    border: InputBorder.none,
+                    label: Text("Task Description"),
+
+                    prefixIcon: Icon(Icons.description_outlined)),
               ),
-              const SizedBox(height: 16),
+              Divider(
+                color: Colors.grey,
+              ),
               FormBuilderDateTimePicker(
                 controller: taskDeadlineController,
                 name: 'taskDeadline',
@@ -63,8 +71,11 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                 initialDate: DateTime.now(),
                 inputType: InputType.date,
                 decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  prefixIcon: Icon(Icons.date_range),
                   label: Text("Task Deadline"),
-                  helperText: "Deadline required",
+
+                  // helperText: "Deadline required",
                 ),
                 validator: (value) {
                   if (value == null) {
@@ -73,24 +84,41 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                   return null;
                 },
               ),
+              Divider(color: Colors.grey),
               const SizedBox(height: 16),
-              FormBuilderChoiceChip(
-                name: 'priority',
-                decoration: const InputDecoration(labelText: 'Priority', helperText: "Priority required",),
-                options: const [
-                  FormBuilderChipOption(value: 'Low', child: Text('Low')),
-                  FormBuilderChipOption(value: 'Medium', child: Text('Medium')),
-                  FormBuilderChipOption(value: 'High', child: Text('High')),
-                ],
-                onChanged: (value) {
-                  taskPriorityController.text = value.toString();
-                },
-                validator: (value) {
-                  if (value == null) {
-                    return "Please select a priority";
-                  }
-                  return null;
-                },
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: FormBuilderChoiceChip(
+                  alignment: WrapAlignment.center,
+                  selectedColor: Colors.greenAccent,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 8,
+                  ),
+                  labelPadding: EdgeInsets.symmetric(horizontal: 42),
+                  name: 'priority',
+                  decoration: InputDecoration(
+                    // labelText: 'Priority',
+                    // helperText: "Priority required",
+                    border: InputBorder.none,
+                  ),
+                  options: const [
+                    FormBuilderChipOption(value: 'Low', child: Text('Low')),
+                    FormBuilderChipOption(
+                        value: 'Medium', child: Text('Medium')),
+                    FormBuilderChipOption(value: 'High', child: Text('High')),
+                  ],
+                  onChanged: (value) {
+                    taskPriorityController.text = value.toString();
+                  },
+                  validator: (value) {
+                    if (value == null) {
+                      return "Please select a priority";
+                    }
+                    return null;
+                  },
+                ),
               ),
             ],
           ),

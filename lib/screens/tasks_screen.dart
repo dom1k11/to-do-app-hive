@@ -112,11 +112,18 @@ class _TasksScreenState extends State<TasksScreen>
                 itemCount: tasks.length,
                 itemBuilder: (context, index) {
                   final oneTask = tasks[index];
-                  return TaskTile(
-                    task: oneTask,
-                    index: index,
+                  return Column(
+                    children: [
+                      TaskTile(
+                        task: oneTask,
+                        index: index,
+                      ),
+                      Divider(color: Colors.grey,),
+                    ],
                   );
+
                 },
+
               );
             },
           ),

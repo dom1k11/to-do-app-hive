@@ -31,29 +31,25 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        // Основной цвет приложения
         hintColor: Colors.orange,
-        // Акцентный цвет (например, для FloatingActionButton)
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color.fromARGB(255, 135, 137, 192), // Цвет AppBar
+          backgroundColor: Colors.orange,
         ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor:
-              Color.fromARGB(255, 255, 231, 76), // Цвет FloatingActionButton
+          backgroundColor: Color.fromARGB(255, 255, 231, 76),
         ),
         textTheme: const TextTheme(
-          // bodyLarge: TextStyle(color: Color.fromARGB(255, 135, 137, 192)), // Цвет для bodyLarge текста
-          bodyMedium: TextStyle(
-              color: Color.fromARGB(
-                  255, 135, 137, 192)), // Цвет для bodyMedium текста
-          // bodySmall: TextStyle(color: Color.fromARGB(255, 135, 137, 192)), // Цвет для bodySmall текста
+          // bodyLarge: TextStyle(color: Colors.orange), // Для крупного текста
+
+
         ),
-        scaffoldBackgroundColor: Colors.white70,
+        scaffoldBackgroundColor: Color.fromARGB(255, 53, 53, 53),
       ),
+
       // home: const HomePage(),
       // home: newTaskScreen(),
       routes: {
-        '/': (context) => const WelcomeScreen(), // Начальный экран
+        '/': (context) => const TasksScreen(), // change to WelcomeScreen(),
         // '/new_task_screen': (context) => const NewTaskScreen(),
         '/edit_screen': (context) {
           final task = ModalRoute.of(context)?.settings.arguments as Task;
