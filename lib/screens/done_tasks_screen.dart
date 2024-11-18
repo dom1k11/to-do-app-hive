@@ -40,8 +40,10 @@ class _DoneTasksScreenState extends State<DoneTasksScreen> {
                   child: AnimatedOpacity(
                       opacity: _opacity,
                       duration: Duration(milliseconds: 1000),
-                      child:
-                          const Text("You don't have any completed tasks.")));
+                      child: const Text(
+                        "You don't have any completed tasks.",
+                        style: TextStyle(fontSize: 24),
+                      )));
             }
 
             return ListView.builder(

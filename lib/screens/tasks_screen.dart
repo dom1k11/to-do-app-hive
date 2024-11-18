@@ -88,45 +88,55 @@ class _TasksScreenState extends State<TasksScreen>
               final tasks = box.values.toList();
 
               if (tasks.isEmpty) {
+                Future.delayed(const Duration(milliseconds: 500), () {
+                  if (_opacity == 0.0) {
+                    setState(() {
+                      _opacity = 1.0;
+                    });
+                  }
+                });
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Center(
                       child: AnimatedOpacity(
                         opacity: _opacity,
-                        duration: const Duration(milliseconds: 2000),
+                        duration: const Duration(milliseconds: 1000),
                         child: const Text(
                           "You don't have any tasks, want to add a new one?",
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
+                          style: TextStyle(fontSize: 20),
                           textAlign: TextAlign.center,
                         ),
                       ),
                     ),
                   ],
                 );
+              } else {
+                // Сброс текста, если появились задачи
+                if (_opacity != 0.0) {
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    setState(() {
+                      _opacity = 0.0;
+                    });
+                  });
+                }
+
+                return ListView.builder(
+                  itemCount: tasks.length,
+                  itemBuilder: (context, index) {
+                    final oneTask = tasks[index];
+                    return Column(
+                      children: [
+                        TaskTile(task: oneTask, index: index),
+                        const Divider(color: Colors.grey),
+                      ],
+                    );
+                  },
+                );
               }
-
-              return ListView.builder(
-                itemCount: tasks.length,
-                itemBuilder: (context, index) {
-                  final oneTask = tasks[index];
-                  return Column(
-                    children: [
-                      TaskTile(
-                        task: oneTask,
-                        index: index,
-                      ),
-                      Divider(color: Colors.grey,),
-                    ],
-                  );
-
-                },
-
-              );
             },
           ),
+
         ),
       ),
       floatingActionButton: AnimatedOpacity(
