@@ -3,6 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_app_hive/contollers/form_controllers.dart';
 import 'package:to_do_app_hive/task_service.dart';
+import 'package:to_do_app_hive/widgets/snackbar.dart';
 
 class NewTaskScreen extends StatefulWidget {
   const NewTaskScreen({super.key});
@@ -144,6 +145,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
             // Если форма невалидна
             print("Form is not valid. Please fill in all fields.");
           }
+          TaskSnackBar(context, "New Task added!", Colors.cyanAccent);
         },
         child: const Icon(Icons.add),
       ),

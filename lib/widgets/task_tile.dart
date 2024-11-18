@@ -5,6 +5,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_app_hive/models/task_model.dart';
 import 'package:to_do_app_hive/task_service.dart';
+import 'package:to_do_app_hive/widgets/snackbar.dart';
 
 class TaskTile extends StatefulWidget {
   final Task task;
@@ -42,6 +43,7 @@ class _TaskTileState extends State<TaskTile> {
               onPressed: (context) {
                 setState(() {
                   _visible = !_visible;
+                  TaskSnackBar(context, "Task Completed!", Colors.greenAccent);
                 });
                 Future.delayed(const Duration(milliseconds: 500), () {
                   setCompleted(widget.index);
@@ -65,9 +67,11 @@ class _TaskTileState extends State<TaskTile> {
               onPressed: (context) {
                 setState(() {
                   _visible = !_visible;
+                  TaskSnackBar(context, "Task succesfully deleted!", Colors.redAccent);
                 });
                 Future.delayed(const Duration(milliseconds: 500), () {
                   deleteTask(widget.index);
+
                 });
               },
               backgroundColor: const Color(0xFFFE4A49),
