@@ -33,7 +33,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Welcome"),
+        // title: const Text("Welcome"),
       ),
       body: Center(
         child: Column(

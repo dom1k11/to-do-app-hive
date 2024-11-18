@@ -30,26 +30,37 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
         hintColor: Colors.orange,
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.orange,
         ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor: Color.fromARGB(255, 255, 231, 76),
+          backgroundColor: Colors.orange,
         ),
         textTheme: const TextTheme(
-          // bodyLarge: TextStyle(color: Colors.orange), // Для крупного текста
-
-
+          bodyLarge: TextStyle(color: Colors.orange), // Для крупного текста
+          bodyMedium: TextStyle(color: Colors.orange), // Для стандартного текста
+          bodySmall: TextStyle(color: Colors.orange), // Для мелкого текста
+          headlineMedium: TextStyle(color: Colors.orange), // Заголовки
+          titleLarge: TextStyle(color: Colors.orange), // Основной текст
+        ),
+        inputDecorationTheme: const InputDecorationTheme(
+          labelStyle: TextStyle(color: Colors.orangeAccent), // Цвет для меток
+          hintStyle: TextStyle(color: Colors.orangeAccent), // Цвет для подсказок (hint)
+        ),
+        listTileTheme: const ListTileThemeData(
+          textColor: Colors.orange, // Цвет текста для заголовков
+          iconColor: Colors.orange, // Цвет иконок
+          subtitleTextStyle: TextStyle(color: Colors.orange), // Цвет текста в подзаголовках
         ),
         scaffoldBackgroundColor: Color.fromARGB(255, 53, 53, 53),
       ),
 
+
       // home: const HomePage(),
       // home: newTaskScreen(),
       routes: {
-        '/': (context) => const TasksScreen(), // change to WelcomeScreen(),
+        '/': (context) => const WelcomeScreen(), // change to WelcomeScreen(),
         // '/new_task_screen': (context) => const NewTaskScreen(),
         '/edit_screen': (context) {
           final task = ModalRoute.of(context)?.settings.arguments as Task;

@@ -87,18 +87,9 @@ class _TaskTileState extends State<TaskTile> {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                widget.task.taskPriority,
-
-              ),
-              Text(
-                widget.task.taskDescription,
-
-              ),
-              Text(
-                DateFormat("MM/dd/yyyy").format(widget.task.taskDeadline),
-
-              ),
+              Text(widget.task.taskPriority),
+              Text(widget.task.taskDescription),
+              Text(DateFormat("MM/dd/yyyy").format(widget.task.taskDeadline)),
             ],
           ),
           trailing: const Icon(

@@ -14,13 +14,13 @@ class NewTaskScreen extends StatefulWidget {
 class _NewTaskScreenState extends State<NewTaskScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  @override
-  void initState() {
-    taskDescriptionController.text = "No Description";
-    taskNameController.text = "New Task Name";
-    taskDeadlineController.text =
-        DateFormat("MM/dd/yyyy").format(DateTime.now());
-  }
+  // @override
+  // void initState() {
+  //   taskDescriptionController.text = "No Description";
+  //   taskNameController.text = "New Task Name";
+  //   taskDeadlineController.text =
+  //       DateFormat("MM/dd/yyyy").format(DateTime.now());
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,6 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                     border: InputBorder.none,
                     // helperText: "Task name required",
                     label: Text("Task Name"),
-
                     prefixIcon: Icon(Icons.edit_note_outlined)),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -57,7 +56,6 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                 decoration: const InputDecoration(
                     border: InputBorder.none,
                     label: Text("Task Description"),
-
                     prefixIcon: Icon(Icons.description_outlined)),
               ),
               Divider(
@@ -91,13 +89,16 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: FormBuilderChoiceChip(
+                  spacing: 8,
+                  showCheckmark: false,
                   alignment: WrapAlignment.center,
                   selectedColor: Colors.greenAccent,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 8,
-                  ),
-                  labelPadding: EdgeInsets.symmetric(horizontal: 42),
+                  backgroundColor: Color.fromARGB(255, 220, 220, 220),
                   name: 'priority',
+                  labelPadding: EdgeInsets.symmetric(horizontal: 50),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 0,
+                  ),
                   decoration: InputDecoration(
                     // labelText: 'Priority',
                     // helperText: "Priority required",

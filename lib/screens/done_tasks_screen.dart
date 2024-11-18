@@ -11,6 +11,18 @@ class DoneTasksScreen extends StatefulWidget {
 
 class _DoneTasksScreenState extends State<DoneTasksScreen> {
   @override
+  void initState() {
+    Future.delayed(Duration(milliseconds: 500), () {
+      setState(() {
+        _opacity = 1.0;
+      });
+    });
+    super.initState();
+  }
+
+  double _opacity = 0.0;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -24,7 +36,12 @@ class _DoneTasksScreenState extends State<DoneTasksScreen> {
             final completedTasks = box.values.toList();
 
             if (completedTasks.isEmpty) {
-              return const Center(child: Text('No completed tasks.'));
+              return Center(
+                  child: AnimatedOpacity(
+                      opacity: _opacity,
+                      duration: Duration(milliseconds: 1000),
+                      child:
+                          const Text("You don't have any completed tasks.")));
             }
 
             return ListView.builder(
