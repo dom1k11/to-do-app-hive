@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:to_do_app_hive/models/task_model.dart';
 import 'package:to_do_app_hive/widgets/task_tile.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class TasksScreen extends StatefulWidget {
   const TasksScreen({super.key});
@@ -72,6 +73,7 @@ class _TasksScreenState extends State<TasksScreen>
     return Scaffold(
       appBar: AppBar(
         title: const Text("Task List"),
+        centerTitle: true,
         leading: IconButton(
           onPressed: () {
             Navigator.pushNamed(context, '/done_tasks_screen');
@@ -81,7 +83,7 @@ class _TasksScreenState extends State<TasksScreen>
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(vertical: 4.0),
           child: ValueListenableBuilder(
             valueListenable: Hive.box<Task>('tasksBox').listenable(),
             builder: (context, Box<Task> box, _) {
@@ -121,22 +123,43 @@ class _TasksScreenState extends State<TasksScreen>
                   });
                 }
 
-                return ListView.builder(
-                  itemCount: tasks.length,
-                  itemBuilder: (context, index) {
-                    final oneTask = tasks[index];
-                    return Column(
-                      children: [
-                        TaskTile(task: oneTask, index: index),
-                        const Divider(color: Colors.grey),
-                      ],
-                    );
-                  },
+                return AnimationLimiter(
+                  child: ListView.builder(
+                    itemCount: tasks.length,
+                    itemBuilder: (context, index) {
+                      final oneTask = tasks[index];
+                      return AnimationConfiguration.staggeredList(
+                        position: index,
+                        duration: Duration(milliseconds: 375),
+                        delay: Duration(milliseconds: 200), // Добавление задержки в 500 мс
+                        child: SlideAnimation(
+                          verticalOffset: 50.0,
+                          child: FadeInAnimation(
+                            child: TaskTile(task: oneTask, index: index),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 );
+
+                // return AnimatedList(
+                //   itemBuilder: (BuildContext context, int index,
+                //       Animation<double> animation) {
+                //     final oneTask = tasks[index];
+                //     return Column(
+                //       children: [
+                //         TaskTile(task: oneTask, index: index),
+                //         const SizedBox(
+                //           height: 1,
+                //         ),
+                //       ],
+                //     );
+                //   },
+                // );
               }
             },
           ),
-
         ),
       ),
       floatingActionButton: AnimatedOpacity(
@@ -153,7 +176,7 @@ class _TasksScreenState extends State<TasksScreen>
         },
         child: AnimatedBuilder(
           animation:
-              Listenable.merge([_rotationController, _expansionController]),
+              Listenable.merge([_rotationController, _expansionController]), //доделать
           builder: (BuildContext context, Widget? child) {
             return Transform.rotate(
               angle: _rotationAnimation.value, // Применяем вращение

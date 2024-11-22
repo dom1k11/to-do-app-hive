@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:to_do_app_hive/models/task_model.dart';
 import 'package:to_do_app_hive/screens/done_tasks_screen.dart';
 import 'package:to_do_app_hive/screens/edit_task_screen.dart';
@@ -19,11 +20,21 @@ void main() async {
   await Hive.openBox<Task>('tasksBox');
   await Hive.openBox<Task>('completedTasksBox');
 
-  runApp(const MyApp());
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
+
+  if (isFirstLaunch) {
+    await prefs.setBool('isFirstLaunch', false);
+  }
+
+  runApp(MyApp(isFirstLaunch: isFirstLaunch));
+
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.isFirstLaunch});
+  final bool isFirstLaunch;
 
   @override
   Widget build(BuildContext context) {
@@ -38,30 +49,33 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.orange,
         ),
         textTheme: const TextTheme(
-          bodyLarge: TextStyle(color: Colors.orange), // Для крупного текста
-          bodyMedium: TextStyle(color: Colors.orange), // Для стандартного текста
-          bodySmall: TextStyle(color: Colors.orange), // Для мелкого текста
-          headlineMedium: TextStyle(color: Colors.orange), // Заголовки
+          bodyLarge: TextStyle(color: Colors.orange),
+          // Для крупного текста
+          bodyMedium: TextStyle(color: Colors.orange),
+          // Для стандартного текста
+          bodySmall: TextStyle(color: Colors.orange),
+          // Для мелкого текста
+          headlineMedium: TextStyle(color: Colors.orange),
+          // Заголовки
           titleLarge: TextStyle(color: Colors.orange), // Основной текст
         ),
         inputDecorationTheme: const InputDecorationTheme(
           labelStyle: TextStyle(color: Colors.orangeAccent), // Цвет для меток
-          hintStyle: TextStyle(color: Colors.orangeAccent), // Цвет для подсказок (hint)
+          hintStyle: TextStyle(
+              color: Colors.orangeAccent), // Цвет для подсказок (hint)
         ),
         listTileTheme: const ListTileThemeData(
           textColor: Colors.orange, // Цвет текста для заголовков
           iconColor: Colors.orange, // Цвет иконок
-          subtitleTextStyle: TextStyle(color: Colors.orange), // Цвет текста в подзаголовках
+          subtitleTextStyle:
+              TextStyle(color: Colors.orange), // Цвет текста в подзаголовках
         ),
         scaffoldBackgroundColor: Color.fromARGB(255, 53, 53, 53),
       ),
-
-
-      // home: const HomePage(),
-      // home: newTaskScreen(),
+      home: isFirstLaunch ? WelcomeScreen() : const TasksScreen(),
+      initialRoute: '/',
       routes: {
-        '/': (context) => const WelcomeScreen(), // change to WelcomeScreen(),
-        // '/new_task_screen': (context) => const NewTaskScreen(),
+
         '/edit_screen': (context) {
           final task = ModalRoute.of(context)?.settings.arguments as Task;
           return EditTaskScreen(task: task);
