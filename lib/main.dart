@@ -1,39 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:to_do_app_hive/models/task_model.dart';
-import 'package:to_do_app_hive/screens/done_tasks_screen.dart';
-import 'package:to_do_app_hive/screens/edit_task_screen.dart';
-import 'package:to_do_app_hive/screens/new_task_screen.dart';
+import 'package:to_do_app_hive/hive/hive_init.dart';
 import 'package:to_do_app_hive/screens/welcome_screen.dart';
+import 'package:to_do_app_hive/utils/first_launch_check.dart';
+import 'package:to_do_app_hive/utils/routes/routes.dart';
 import '../screens/tasks_screen.dart';
 
 void main() async {
-  try {
-    await Hive.initFlutter();
-    print("Hive initialized");
-  } catch (e) {
-    print('Error initializing Hive: $e');
-  }
-  Hive.registerAdapter(TaskAdapter());
-  await Hive.openBox<Task>('tasksBox');
-  await Hive.openBox<Task>('completedTasksBox');
-
-
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
-
-  if (isFirstLaunch) {
-    await prefs.setBool('isFirstLaunch', false);
-  }
-
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeHive();
+  bool isFirstLaunch = await firstLaunchChecking();
   runApp(MyApp(isFirstLaunch: isFirstLaunch));
-
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.isFirstLaunch});
+
   final bool isFirstLaunch;
 
   @override
@@ -73,55 +54,9 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Color.fromARGB(255, 53, 53, 53),
       ),
       home: isFirstLaunch ? WelcomeScreen() : const TasksScreen(),
-      initialRoute: '/',
-      routes: {
-
-        '/edit_screen': (context) {
-          final task = ModalRoute.of(context)?.settings.arguments as Task;
-          return EditTaskScreen(task: task);
-        },
-      },
-      onGenerateRoute: (settings) {
-        switch (settings.name) {
-          case '/tasks_screen':
-            return PageTransition(
-              child: const TasksScreen(),
-              type: PageTransitionType.rightToLeftWithFade,
-              curve: Curves.easeInOut,
-              duration: const Duration(milliseconds: 500),
-              reverseDuration: const Duration(milliseconds: 500),
-              opaque: true,
-            );
-          case '/done_tasks_screen': // Добавляем обработку перехода на DoneTasksScreen
-            return PageTransition(
-              child: const DoneTasksScreen(),
-              type: PageTransitionType.leftToRightWithFade,
-              // Анимация справа налево
-              curve: Curves.easeInOut,
-              // Плавное изменение
-              duration: const Duration(milliseconds: 500),
-              // Длительность
-              reverseDuration: const Duration(milliseconds: 500),
-              // Длительность обратной анимации
-              opaque: true,
-            );
-          case '/new_task_screen': // Добавляем обработку перехода на DoneTasksScreen
-            return PageTransition(
-              child: const NewTaskScreen(),
-              type: PageTransitionType.rightToLeftWithFade,
-              // Анимация справа налево
-              curve: Curves.easeInOut,
-              // Плавное изменение
-              duration: const Duration(milliseconds: 500),
-              // Длительность
-              reverseDuration: const Duration(milliseconds: 500),
-              // Длительность обратной анимации
-              opaque: true,
-            );
-          default:
-            return null;
-        }
-      },
+      initialRoute: AppRoutes.initialRoute,
+      routes: AppRoutes.routes,
+      onGenerateRoute: AppRoutes.onGenerateRoute,
     );
   }
 }
