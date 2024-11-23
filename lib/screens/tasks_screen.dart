@@ -142,21 +142,6 @@ class _TasksScreenState extends State<TasksScreen>
                     },
                   ),
                 );
-
-                // return AnimatedList(
-                //   itemBuilder: (BuildContext context, int index,
-                //       Animation<double> animation) {
-                //     final oneTask = tasks[index];
-                //     return Column(
-                //       children: [
-                //         TaskTile(task: oneTask, index: index),
-                //         const SizedBox(
-                //           height: 1,
-                //         ),
-                //       ],
-                //     );
-                //   },
-                // );
               }
             },
           ),
