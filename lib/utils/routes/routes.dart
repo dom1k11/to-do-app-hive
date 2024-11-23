@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:to_do_app_hive/screens/edit_task_screen.dart';
-import 'package:to_do_app_hive/screens/tasks_screen.dart';
+import 'package:to_do_app_hive/screens/tasks_screen/tasks_screen.dart';
 import 'package:to_do_app_hive/screens/done_tasks_screen.dart';
 import 'package:to_do_app_hive/screens/new_task_screen.dart';
 import 'package:to_do_app_hive/models/task_model.dart';
