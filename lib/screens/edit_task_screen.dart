@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:intl/intl.dart';
+
 import 'package:to_do_app_hive/contollers/form_controllers.dart';
 import 'package:to_do_app_hive/screens/new_task_screen/forms/date.dart';
 import 'package:to_do_app_hive/screens/new_task_screen/forms/description.dart';
@@ -21,16 +20,11 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   @override
   void initState() {
     super.initState();
-    taskNameController = TextEditingController(text: widget.task.taskName);
-    taskDescriptionController =
-        TextEditingController(text: widget.task.taskDescription);
-    taskDeadlineController = TextEditingController(
-        text: DateFormat("MM/dd/yyyy").format(widget.task.taskDeadline));
-    taskPriorityController =
-        TextEditingController(text: widget.task.taskPriority);
+    taskNameController.text = widget.task.taskName;
+    taskDescriptionController.text = widget.task.taskDescription;
+    taskPriorityController.text = widget.task.taskPriority;
   }
 
-  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,19 +36,20 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
           Divider(
             color: Colors.grey.shade800,
           ),
-          TaskNameForm(),
+          const TaskNameForm(),
           Divider(
             color: Colors.grey.shade800,
           ),
-          TaskDescriptionForm(),
+          const TaskDescriptionForm(),
           Divider(
             color: Colors.grey.shade800,
           ),
-          TaskDateForm(),
+          // Передача начальной даты в TaskDateForm
+          TaskDateForm(initialDate: widget.task.taskDeadline),
           Divider(
             color: Colors.grey.shade800,
           ),
-          PriorityForm(),
+          const PriorityForm(),
           Divider(
             color: Colors.grey.shade800,
           ),
@@ -62,8 +57,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // editTask(index); // Вызов метода редактирования с передачей индекса
-
+          // Вставить логику сохранения или редактирования задачи
           Navigator.pop(context);
         },
         child: const Icon(Icons.edit),
