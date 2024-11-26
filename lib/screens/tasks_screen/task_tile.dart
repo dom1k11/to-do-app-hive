@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_app_hive/models/task_model.dart';
-import 'package:to_do_app_hive/task_service.dart';
+import 'package:to_do_app_hive/hive/task_service.dart';
 import 'package:to_do_app_hive/widgets/snackbar.dart';
 
 class TaskTile extends StatefulWidget {
@@ -110,11 +110,9 @@ class _TaskTileState extends State<TaskTile> {
               Navigator.pushNamed(
                 context,
                 '/edit_screen',
-                arguments: {
-                  'task': widget.task,
-                  'index': widget.index
-                }, // Передаем задачу и индекс
+                arguments: widget.task, // Передаётся сразу Task
               );
+
             },
           ),
         ),

@@ -33,6 +33,7 @@ class AppRoutes {
           reverseDuration: const Duration(milliseconds: 500),
           opaque: true,
         );
+
       case doneTasksScreen:
         return PageTransition(
           child: const DoneTasksScreen(),

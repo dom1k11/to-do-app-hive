@@ -2,35 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_app_hive/contollers/form_controllers.dart';
+import 'package:to_do_app_hive/screens/new_task_screen/forms/date.dart';
+import 'package:to_do_app_hive/screens/new_task_screen/forms/description.dart';
+import 'package:to_do_app_hive/screens/new_task_screen/forms/name.dart';
+import 'package:to_do_app_hive/screens/new_task_screen/forms/priority_form.dart';
 import '../models/task_model.dart';
+
 class EditTaskScreen extends StatefulWidget {
   const EditTaskScreen({super.key, required this.task});
+
   final Task task;
 
   @override
   State<EditTaskScreen> createState() => _EditTaskScreenState();
-
 }
 
 class _EditTaskScreenState extends State<EditTaskScreen> {
   @override
   void initState() {
     super.initState();
-     taskNameController = TextEditingController(text: widget.task.taskName);
-     taskDescriptionController = TextEditingController(text: widget.task.taskDescription);
-     taskDeadlineController = TextEditingController(text: DateFormat("MM/dd/yyyy").format(widget.task.taskDeadline));
-     taskPriorityController = TextEditingController(text: widget.task.taskPriority);
+    taskNameController = TextEditingController(text: widget.task.taskName);
+    taskDescriptionController =
+        TextEditingController(text: widget.task.taskDescription);
+    taskDeadlineController = TextEditingController(
+        text: DateFormat("MM/dd/yyyy").format(widget.task.taskDeadline));
+    taskPriorityController =
+        TextEditingController(text: widget.task.taskPriority);
   }
 
   @override
-  // void dispose() {
-  //   taskNameController.dispose();
-  //   taskDescriptionController.dispose();
-  //   taskDeadlineController.dispose();
-  //   taskPriorityController.dispose();
-  //   super.dispose();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,56 +39,33 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
       ),
       body: Column(
         children: [
-          FormBuilderTextField(
-            controller: taskNameController,
-            name: 'Task Name',
-            decoration: const InputDecoration(
-              label: Text("Task Name"),
-            ),
+          Divider(
+            color: Colors.grey.shade800,
           ),
-          FormBuilderTextField(
-            controller: taskDescriptionController,
-            name: 'Task Description',
-            decoration: const InputDecoration(
-              label: Text("Task Description"),
-            ),
+          TaskNameForm(),
+          Divider(
+            color: Colors.grey.shade800,
           ),
-          FormBuilderDateTimePicker(
-            controller: taskDeadlineController,
-            name: 'taskDeadline',
-            firstDate: DateTime.now(),
-            lastDate: DateTime.now().add(const Duration(days: 365)),
-            initialDate: DateTime.now(),
-            inputType: InputType.date,
-            decoration: const InputDecoration(
-              label: Text("Task Deadline"),
-            ),
-            initialValue: widget.task.taskDeadline,
+          TaskDescriptionForm(),
+          Divider(
+            color: Colors.grey.shade800,
           ),
-          FormBuilderChoiceChip(
-            name: 'priority',
-            decoration: const InputDecoration(labelText: 'Priority'),
-            options: const [
-              FormBuilderChipOption(value: 'Low', child: Text('Low')),
-              FormBuilderChipOption(value: 'Medium', child: Text('Medium')),
-              FormBuilderChipOption(value: 'High', child: Text('High')),
-            ],
-            onChanged: (value) {
-              taskPriorityController.text = value.toString();
-              print("Selected priority: $taskPriorityController");
-            },
-            initialValue: widget.task.taskPriority,
+          TaskDateForm(),
+          Divider(
+            color: Colors.grey.shade800,
+          ),
+          PriorityForm(),
+          Divider(
+            color: Colors.grey.shade800,
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-
-           // editTask(index); // Вызов метода редактирования с передачей индекса
+          // editTask(index); // Вызов метода редактирования с передачей индекса
 
           Navigator.pop(context);
         },
-
         child: const Icon(Icons.edit),
       ),
     );

@@ -6,7 +6,7 @@ import 'package:to_do_app_hive/screens/new_task_screen/forms/priority_form.dart'
 import 'package:to_do_app_hive/screens/new_task_screen/forms/date.dart';
 import 'package:to_do_app_hive/screens/new_task_screen/forms/description.dart';
 import 'package:to_do_app_hive/screens/new_task_screen/forms/name.dart';
-import 'package:to_do_app_hive/task_service.dart';
+import 'package:to_do_app_hive/hive/task_service.dart';
 import 'package:to_do_app_hive/widgets/snackbar.dart';
 
 class NewTaskScreen extends StatefulWidget {
@@ -18,6 +18,12 @@ class NewTaskScreen extends StatefulWidget {
 
 class _NewTaskScreenState extends State<NewTaskScreen> {
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    clearControllers();
+  }
 
   @override
   Widget build(BuildContext context) {
