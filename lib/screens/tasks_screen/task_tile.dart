@@ -12,10 +12,10 @@ class TaskTile extends StatefulWidget {
   final int index;
 
   const TaskTile({
-    Key? key,
+    super.key,
     required this.task,
     required this.index,
-  }) : super(key: key);
+  });
 
   @override
   State<TaskTile> createState() => _TaskTileState();
@@ -42,14 +42,14 @@ class _TaskTileState extends State<TaskTile> {
             children: [
               // A SlidableAction can have an icon and/or a label.
               SlidableAction(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(8),
                   bottomLeft: Radius.circular(8),
                 ),
                 onPressed: (context) {
                   setState(() {
                     _visible = !_visible;
-                    TaskSnackBar(context, "Task Completed!", Colors.greenAccent);
+                    taskSnackBar(context, "Task Completed!", Colors.greenAccent);
                   });
                   Future.delayed(const Duration(milliseconds: 500), () {
                     setCompleted(widget.index);
@@ -66,14 +66,14 @@ class _TaskTileState extends State<TaskTile> {
             children: [
               // A SlidableAction can have an icon and/or a label.
               SlidableAction(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(8),
                   bottomRight: Radius.circular(8),
                 ),
                 onPressed: (context) {
                   setState(() {
                     _visible = !_visible;
-                    TaskSnackBar(context, "Task succesfully deleted!", Colors.redAccent);
+                    taskSnackBar(context, "Task succesfully deleted!", Colors.redAccent);
                   });
                   Future.delayed(const Duration(milliseconds: 500), () {
                     deleteTask(widget.index);

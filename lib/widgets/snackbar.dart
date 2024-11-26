@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-void TaskSnackBar(BuildContext context, String message, Color color)
+void taskSnackBar(BuildContext context, String message, Color color)
 {
   final taskSnackBar = SnackBar(
-    content: Text(message,  style: TextStyle(color: Colors.black),
+    content: Text(message,  style: const TextStyle(color: Colors.black),
     ),
-    duration: Duration(seconds: 2),
+    duration: const Duration(seconds: 2),
     backgroundColor: color,
   );
   ScaffoldMessenger.of(context).showSnackBar(taskSnackBar);

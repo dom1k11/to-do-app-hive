@@ -45,6 +45,7 @@ class _AnimatedFabState extends State<AnimatedFab> with TickerProviderStateMixin
       });
     });
   }
+  @override
   void dispose() {
     _rotationController.dispose();
     _expansionController.dispose();
@@ -52,6 +53,7 @@ class _AnimatedFabState extends State<AnimatedFab> with TickerProviderStateMixin
   }
 
 
+  @override
   Widget build(BuildContext context) {
     return AnimatedOpacity(
       opacity: _isVisible ? 1 : 0, // Плавное появление кнопки

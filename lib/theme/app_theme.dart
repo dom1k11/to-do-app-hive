@@ -30,5 +30,5 @@ ThemeData appTheme = ThemeData(
     subtitleTextStyle:
     TextStyle(color: Colors.orange), // Цвет текста в подзаголовках
   ),
-  scaffoldBackgroundColor: Color.fromARGB(255, 53, 53, 53),
+  scaffoldBackgroundColor: const Color.fromARGB(255, 53, 53, 53),
 );

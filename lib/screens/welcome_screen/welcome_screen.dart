@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:to_do_app_hive/screens/welcome_screen/messages.dart';
 import 'package:to_do_app_hive/widgets/custom_elevated_button.dart';
 

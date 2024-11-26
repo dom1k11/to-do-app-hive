@@ -12,7 +12,7 @@ class DoneTasksScreen extends StatefulWidget {
 class _DoneTasksScreenState extends State<DoneTasksScreen> {
   @override
   void initState() {
-    Future.delayed(Duration(milliseconds: 500), () {
+    Future.delayed(const Duration(milliseconds: 500), () {
       setState(() {
         _opacity = 1.0;
       });
@@ -39,7 +39,7 @@ class _DoneTasksScreenState extends State<DoneTasksScreen> {
               return Center(
                   child: AnimatedOpacity(
                       opacity: _opacity,
-                      duration: Duration(milliseconds: 1000),
+                      duration: const Duration(milliseconds: 1000),
                       child: const Text(
                         "You don't have any completed tasks.",
                         style: TextStyle(fontSize: 24),

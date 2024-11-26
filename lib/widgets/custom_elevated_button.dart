@@ -26,7 +26,7 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton> {
       opacity: _opacity,
       duration: const Duration(milliseconds: 1000),
       curve: Curves.easeInSine,
-      child: Container(
+      child: SizedBox(
         width: 200,
         height: 40,
         child: ElevatedButton(

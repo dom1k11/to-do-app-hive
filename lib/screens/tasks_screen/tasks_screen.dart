@@ -18,6 +18,7 @@ class _TasksScreenState extends State<TasksScreen> {
   @override
   void initState() {
     super.initState();
+    Hive.openBox<Task>('tasksBox');
     Future.delayed(const Duration(milliseconds: 500), () {
       setState(() {
         _opacity = 1.0;
@@ -25,7 +26,7 @@ class _TasksScreenState extends State<TasksScreen> {
     });
   }
 
-  @override
+
   @override
   Widget build(BuildContext context) {
     Hive.openBox<Task>('tasksBox');

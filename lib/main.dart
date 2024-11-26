@@ -18,8 +18,8 @@ void main() async {
   }
   Hive.registerAdapter(TaskAdapter());
 
-  openTasksBox();
-  openCompletedTasksBox();
+  await Hive.openBox<Task>('tasksBox');
+  await Hive.openBox<Task>('completedTasksBox');
   bool isFirstLaunch = await firstLaunchChecking();
   runApp(MyApp(isFirstLaunch: isFirstLaunch));
 }
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: appTheme,
-      home: isFirstLaunch ? WelcomeScreen() : const TasksScreen(),
+      home: isFirstLaunch ? const WelcomeScreen() : const TasksScreen(),
       initialRoute: AppRoutes.initialRoute,
       routes: AppRoutes.routes,
       onGenerateRoute: AppRoutes.onGenerateRoute,
