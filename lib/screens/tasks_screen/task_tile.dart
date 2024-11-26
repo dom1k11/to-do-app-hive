@@ -30,6 +30,7 @@ class _TaskTileState extends State<TaskTile> {
       opacity: _visible ? 1.0 : 0.0,
       duration: const Duration(milliseconds: 500),
       child: Container(
+
         color: widget.task.taskPriority == 'High'
             ? const Color.fromARGB(50, 215, 93, 93)
             : widget.task.taskPriority == 'Medium'
@@ -86,34 +87,40 @@ class _TaskTileState extends State<TaskTile> {
               ),
             ],
           ),
-          child: ListTile(
-            leading: const Icon(
-              Icons.arrow_right,
-              color: Colors.green,
-            ),
-            title: Text(
-              widget.task.taskName,
-            ),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(widget.task.taskPriority),
-                Text(widget.task.taskDescription),
-                Text(DateFormat("MM/dd/yyyy").format(widget.task.taskDeadline)),
-              ],
-            ),
-            trailing: const Icon(
-              Icons.arrow_left,
-              color: Colors.red,
-            ),
-            onTap: () {
-              Navigator.pushNamed(
-                context,
-                '/edit_screen',
-                arguments: widget.task, // Передаётся сразу Task
-              );
+          child: Container(padding: EdgeInsets.symmetric(vertical: 12.0),
+            child: ListTile(
+              leading: const Icon(
+                Icons.arrow_right,
+                color: Colors.green,
+              ),
+              title: Text(
+                widget.task.taskName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Text(widget.task.taskPriority),
+                  Text(widget.task.taskDescription, maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.orange),),
+                  Text(DateFormat("MM/dd/yyyy").format(widget.task.taskDeadline)),
+                ],
+              ),
+              trailing: const Icon(
+                Icons.arrow_left,
+                color: Colors.red,
+              ),
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  '/edit_screen',
+                  arguments: widget.task, // Передаётся сразу Task
+                );
 
-            },
+              },
+            ),
           ),
         ),
       ),

@@ -26,7 +26,6 @@ class _TasksScreenState extends State<TasksScreen> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     Hive.openBox<Task>('tasksBox');
@@ -67,7 +66,9 @@ class _TasksScreenState extends State<TasksScreen> {
                     });
                   });
                 }
-                return TaskListView(tasks: tasks);
+                return Container(
+                  margin: EdgeInsets.symmetric(),
+                    child: TaskListView(tasks: tasks));
               }
             },
           ),

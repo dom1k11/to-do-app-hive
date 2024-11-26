@@ -50,10 +50,14 @@ class _DoneTasksScreenState extends State<DoneTasksScreen> {
               itemCount: completedTasks.length,
               itemBuilder: (context, index) {
                 final task = completedTasks[index];
-                return ListTile(
-                  title: Text(task.taskName),
-                  subtitle: Text(task.taskDescription),
-                  trailing: const Icon(Icons.check, color: Colors.green),
+                return Container(
+                  margin: EdgeInsets.symmetric(vertical: 2),
+                  color: Colors.grey.shade800,
+                  child: ListTile(
+                    title: Text(task.taskName, maxLines: 3,),
+                    subtitle: Text(task.taskDescription, maxLines: 3,),
+                    trailing: const Icon(Icons.check, color: Colors.green),
+                  ),
                 );
               },
             );
