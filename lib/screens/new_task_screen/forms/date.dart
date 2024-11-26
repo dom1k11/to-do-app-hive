@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:intl/intl.dart';
 import 'package:to_do_app_hive/contollers/form_controllers.dart';
 
 class TaskDateForm extends StatelessWidget {
@@ -13,6 +14,7 @@ class TaskDateForm extends StatelessWidget {
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 365)),
       initialDate: DateTime.now(),
+      initialValue: DateTime.now(),
       inputType: InputType.date,
       decoration: const InputDecoration(
         border: InputBorder.none,

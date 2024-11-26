@@ -30,7 +30,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
         TextEditingController(text: widget.task.taskPriority);
   }
 
-  @override
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
