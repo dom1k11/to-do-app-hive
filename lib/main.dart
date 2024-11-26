@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:to_do_app_hive/hive/hive_init.dart';
 import 'package:to_do_app_hive/models/task_model.dart';
 import 'package:to_do_app_hive/screens/welcome_screen/welcome_screen.dart';
 import 'package:to_do_app_hive/theme/app_theme.dart';

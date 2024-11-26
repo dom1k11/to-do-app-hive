@@ -46,7 +46,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
               Divider(
                 color: Colors.grey.shade800,
               ),
-              const TaskDateForm(initialDate: null,),
+              const TaskDateForm(),
               Divider(
                 color: Colors.grey.shade800,
               ),
