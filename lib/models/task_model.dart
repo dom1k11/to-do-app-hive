@@ -25,4 +25,6 @@ class Task {
       required this.taskDeadline,
       this.isTaskCompleted = false,
       required this.taskPriority});
+
 }
+

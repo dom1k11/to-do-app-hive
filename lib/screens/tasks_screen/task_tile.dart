@@ -5,6 +5,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_app_hive/models/task_model.dart';
 import 'package:to_do_app_hive/hive/task_service.dart';
+import 'package:to_do_app_hive/utils/deadline.dart';
 import 'package:to_do_app_hive/widgets/snackbar.dart';
 
 class TaskTile extends StatefulWidget {
@@ -30,12 +31,11 @@ class _TaskTileState extends State<TaskTile> {
       opacity: _visible ? 1.0 : 0.0,
       duration: const Duration(milliseconds: 500),
       child: Container(
-
         color: widget.task.taskPriority == 'High'
             ? const Color.fromARGB(50, 215, 93, 93)
             : widget.task.taskPriority == 'Medium'
-            ? const Color.fromARGB(50, 255, 212, 0)
-            : const Color.fromARGB(50, 127, 238, 175),
+                ? const Color.fromARGB(50, 255, 212, 0)
+                : const Color.fromARGB(50, 127, 238, 175),
         child: Slidable(
           startActionPane: ActionPane(
             motion: const ScrollMotion(),
@@ -50,7 +50,8 @@ class _TaskTileState extends State<TaskTile> {
                 onPressed: (context) {
                   setState(() {
                     _visible = !_visible;
-                    taskSnackBar(context, "Task Completed!", Colors.greenAccent);
+                    taskSnackBar(
+                        context, "Task Completed!", Colors.greenAccent);
                   });
                   Future.delayed(const Duration(milliseconds: 500), () {
                     setCompleted(widget.index);
@@ -74,11 +75,11 @@ class _TaskTileState extends State<TaskTile> {
                 onPressed: (context) {
                   setState(() {
                     _visible = !_visible;
-                    taskSnackBar(context, "Task succesfully deleted!", Colors.redAccent);
+                    taskSnackBar(
+                        context, "Task succesfully deleted!", Colors.redAccent);
                   });
                   Future.delayed(const Duration(milliseconds: 500), () {
                     deleteTask(widget.index);
-
                   });
                 },
                 backgroundColor: const Color(0xFFFE4A49),
@@ -87,7 +88,8 @@ class _TaskTileState extends State<TaskTile> {
               ),
             ],
           ),
-          child: Container(padding: EdgeInsets.symmetric(vertical: 12.0),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
             child: ListTile(
               leading: const Icon(
                 Icons.arrow_right,
@@ -102,10 +104,26 @@ class _TaskTileState extends State<TaskTile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Text(widget.task.taskPriority),
-                  Text(widget.task.taskDescription, maxLines: 2,
+                  Text(
+                    widget.task.taskDescription,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.orange),),
-                  Text(DateFormat("MM/dd/yyyy").format(widget.task.taskDeadline)),
+                    style: const TextStyle(color: Colors.orange),
+                  ),
+                  Row(
+                    children: [
+                      Text(DateFormat("MM/dd/yyyy")
+                          .format(widget.task.taskDeadline)),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        widget.task.deadlineCounter,
+                        style: TextStyle(
+                            color: widget.task.deadlineCounterColor),
+                      ),
+                    ],
+                  ),
                 ],
               ),
               trailing: const Icon(
@@ -118,7 +136,6 @@ class _TaskTileState extends State<TaskTile> {
                   '/edit_screen',
                   arguments: widget.task, // Передаётся сразу Task
                 );
-
               },
             ),
           ),

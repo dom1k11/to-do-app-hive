@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:intl/intl.dart';
 import 'package:to_do_app_hive/contollers/form_controllers.dart';
 
 class TaskDateForm extends StatelessWidget {
@@ -9,6 +8,9 @@ class TaskDateForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormBuilderDateTimePicker(
+      confirmText: "CONFIRM",
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+      cancelText: 'CANCEL',
       controller: taskDeadlineController,
       name: 'taskDeadline',
       firstDate: DateTime.now(),
@@ -18,7 +20,10 @@ class TaskDateForm extends StatelessWidget {
       inputType: InputType.date,
       decoration: const InputDecoration(
         border: InputBorder.none,
-        prefixIcon: Icon(Icons.date_range),
+        prefixIcon: Icon(
+          Icons.date_range,
+          color: Colors.orange,
+        ),
         label: Text("Task Deadline"),
 
         // helperText: "Deadline required",

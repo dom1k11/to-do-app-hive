@@ -14,7 +14,7 @@ class TaskNameForm extends StatelessWidget {
           border: InputBorder.none,
           // helperText: "Task name required",
           label: Text("Task Name"),
-          prefixIcon: Icon(Icons.edit_note_outlined)),
+          prefixIcon: Icon(Icons.edit_note_outlined, color: Colors.orange,)),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return "Please enter a task name";

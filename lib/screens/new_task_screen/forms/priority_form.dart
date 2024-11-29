@@ -9,6 +9,7 @@ class PriorityForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderChoiceChip(
       spacing: 8,
+      elevation: 16,
       showCheckmark: false,
       alignment: WrapAlignment.center,
       selectedColor: Colors.greenAccent,
@@ -18,11 +19,7 @@ class PriorityForm extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
         horizontal: 0,
       ),
-      decoration: const InputDecoration(
-        // labelText: 'Priority',
-        // helperText: "Priority required",
-        border: InputBorder.none,
-      ),
+
       options: const [
         FormBuilderChipOption(value: 'Low', child: Text('Low')),
         FormBuilderChipOption(value: 'Medium', child: Text('Medium')),

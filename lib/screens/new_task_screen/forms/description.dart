@@ -14,7 +14,7 @@ class TaskDescriptionForm extends StatelessWidget {
       decoration: const InputDecoration(
           border: InputBorder.none,
           label: Text("Task Description"),
-          prefixIcon: Icon(Icons.description_outlined)),
+          prefixIcon: Icon(Icons.description_outlined, color: Colors.orange,)),
     );
   }
 }

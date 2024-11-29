@@ -28,7 +28,8 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("New Task")),
+      appBar: AppBar(title: const Text("New Task"),
+      centerTitle: true,),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Form(

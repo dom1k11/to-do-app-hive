@@ -42,7 +42,7 @@ class _TasksScreenState extends State<TasksScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4.0),
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: ValueListenableBuilder(
             valueListenable: Hive.box<Task>('tasksBox').listenable(),
             builder: (context, Box<Task> box, _) {
