@@ -17,10 +17,11 @@ class TaskNameForm extends StatelessWidget {
           prefixIcon: Icon(Icons.edit_note_outlined, color: Colors.orange,)),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return "Please enter a task name";
+          return "Task name is required";
         }
         return null;
       },
+
     );
   }
 }

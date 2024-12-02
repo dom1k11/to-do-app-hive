@@ -28,8 +28,10 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("New Task"),
-      centerTitle: true,),
+      appBar: AppBar(
+        title: const Text("New Task"),
+        centerTitle: true,
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -80,11 +82,15 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
             );
 
             Navigator.pop(context);
+            Future.delayed(const Duration(milliseconds: 500), () {
+              if (mounted) {
+                taskSnackBar(context, "New Task added!", Colors.cyanAccent);
+              }
+            });
           } else {
             // Если форма невалидна
             print("Form is not valid. Please fill in all fields.");
           }
-          taskSnackBar(context, "New Task added!", Colors.cyanAccent);
         },
         child: const Icon(Icons.add),
       ),
