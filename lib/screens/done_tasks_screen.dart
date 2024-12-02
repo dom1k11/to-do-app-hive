@@ -27,6 +27,7 @@ class _DoneTasksScreenState extends State<DoneTasksScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Done Tasks"),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

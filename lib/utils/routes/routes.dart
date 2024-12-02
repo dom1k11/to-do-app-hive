@@ -13,15 +13,6 @@ class AppRoutes {
   static const String doneTasksScreen = '/done_tasks_screen';
   static const String newTaskScreen = '/new_task_screen';
 
-  static Map<String, WidgetBuilder> get routes {
-    return {
-      editScreen: (context) {
-        final task = ModalRoute.of(context)?.settings.arguments as Task;
-        return EditTaskScreen(task: task);
-      },
-    };
-  }
-
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case tasksScreen:
@@ -51,6 +42,16 @@ class AppRoutes {
           duration: const Duration(milliseconds: 500),
           reverseDuration: const Duration(milliseconds: 500),
           opaque: true,
+        );
+      case editScreen:
+        final task = settings.arguments as Task?;
+        return PageTransition(
+          child: EditTaskScreen(task: task!),
+          type: PageTransitionType.scale,
+          alignment: Alignment.center,
+          curve: Curves.elasticOut,
+          duration: const Duration(milliseconds: 2000),
+          reverseDuration: const Duration(milliseconds: 500),
         );
       default:
         return null;

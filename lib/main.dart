@@ -36,7 +36,6 @@ class MyApp extends StatelessWidget {
       theme: appTheme,
       home: isFirstLaunch ? const WelcomeScreen() : const TasksScreen(),
       initialRoute: AppRoutes.initialRoute,
-      routes: AppRoutes.routes,
       onGenerateRoute: AppRoutes.onGenerateRoute,
     );
   }

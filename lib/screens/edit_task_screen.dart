@@ -33,7 +33,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Edit Screen"),
+        title: const Text("Edit Task"),
+        centerTitle: true,
       ),
       body: Column(
         children: [
