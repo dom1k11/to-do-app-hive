@@ -82,11 +82,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
             );
 
             Navigator.pop(context);
-            Future.delayed(const Duration(milliseconds: 500), () {
-              if (mounted) {
-                taskSnackBar(context, "New Task added!", Colors.cyanAccent);
-              }
-            });
+            taskSnackBar(context, "New Task added!", Colors.cyanAccent);
           } else {
             // Если форма невалидна
             print("Form is not valid. Please fill in all fields.");

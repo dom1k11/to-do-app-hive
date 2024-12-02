@@ -8,6 +8,7 @@ class TaskDateForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormBuilderDateTimePicker(
+
       confirmText: "CONFIRM",
       initialEntryMode: DatePickerEntryMode.calendarOnly,
       cancelText: 'CANCEL',
@@ -34,6 +35,7 @@ class TaskDateForm extends StatelessWidget {
         }
         return null;
       },
+
     );
   }
 }

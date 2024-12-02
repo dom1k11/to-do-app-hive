@@ -13,11 +13,12 @@ class TaskListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final reversedTasks = List<Task>.from(tasks.reversed);
     return AnimationLimiter(
       child: ListView.builder(
         itemCount: tasks.length,
         itemBuilder: (context, index) {
-          final oneTask = tasks[index];
+          final oneTask = reversedTasks[index];
           return AnimationConfiguration.staggeredList(
             position: index,
             duration: const Duration(milliseconds: 375),
