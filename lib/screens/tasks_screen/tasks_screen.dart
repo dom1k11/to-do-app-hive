@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:to_do_app_hive/models/task_model.dart';
+import 'package:to_do_app_hive/theme/text_style/app_bar.dart';
 import 'package:to_do_app_hive/utils/empty_tasks_message.dart';
 import 'package:to_do_app_hive/utils/task_listview.dart';
 import 'package:to_do_app_hive/widgets/animated_fab.dart';
@@ -31,7 +32,7 @@ class _TasksScreenState extends State<TasksScreen> {
     Hive.openBox<Task>('tasksBox');
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Task List"),
+        title: Text("Task List", style: appbarTextStyle,),
         centerTitle: true,
         leading: IconButton(
           onPressed: () {

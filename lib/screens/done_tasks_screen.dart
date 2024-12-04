@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:to_do_app_hive/models/task_model.dart';
+import 'package:to_do_app_hive/theme/text_style/app_bar.dart';
 
 class DoneTasksScreen extends StatefulWidget {
   const DoneTasksScreen({super.key});
@@ -26,7 +27,7 @@ class _DoneTasksScreenState extends State<DoneTasksScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Done Tasks"),
+        title: Text("Done Tasks", style: appbarTextStyle,),
         centerTitle: true,
       ),
       body: Padding(

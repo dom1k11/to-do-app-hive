@@ -31,10 +31,16 @@ class _PriorityFormState extends State<PriorityForm> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double chipWidth = (screenWidth/2);
+
+    double textSize = (screenWidth / 25).clamp(8.0, 36.0);
     return FormBuilderChoiceChip(
       decoration: const InputDecoration(
         border: InputBorder.none,
       ),
+      runAlignment: WrapAlignment.center,
+      direction: Axis.vertical,
       spacing: 8,
       elevation: 16,
       showCheckmark: false,
@@ -46,10 +52,43 @@ class _PriorityFormState extends State<PriorityForm> {
       padding: const EdgeInsets.symmetric(
         horizontal: 0,
       ),
-      options: const [
-        FormBuilderChipOption(value: 'Low', child: Text('Low')),
-        FormBuilderChipOption(value: 'Medium', child: Text('Medium')),
-        FormBuilderChipOption(value: 'High', child: Text('High')),
+      options: [
+        FormBuilderChipOption(
+            value: 'Low',
+            child: Container(
+                width: chipWidth,
+                height: 50,
+                child:  Center(
+                  child: Text('Low',
+                      style: TextStyle(
+                          fontSize: textSize,
+                          letterSpacing: 2,
+                          fontWeight: FontWeight.bold)),
+                ))),
+        FormBuilderChipOption(
+            value: 'Medium',
+            child: Container(
+                width: chipWidth,
+                height: 50,
+                child: Center(
+                    child: Text(
+                  'Medium',
+                  style: TextStyle(
+                      fontSize: textSize,
+                      letterSpacing: 3,
+                      fontWeight: FontWeight.bold),
+                )))),
+        FormBuilderChipOption(
+            value: 'High',
+            child: Container(
+                width: chipWidth,
+                height: 50,
+                child: Center(
+                    child: Text('High',
+                        style: TextStyle(
+                            fontSize: textSize,
+                            letterSpacing: 2,
+                            fontWeight: FontWeight.bold))))),
       ],
       onChanged: (value) {
         taskPriorityController.text = value.toString();

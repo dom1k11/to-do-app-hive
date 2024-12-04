@@ -7,6 +7,7 @@ import 'package:to_do_app_hive/screens/new_task_screen/forms/date.dart';
 import 'package:to_do_app_hive/screens/new_task_screen/forms/description.dart';
 import 'package:to_do_app_hive/screens/new_task_screen/forms/name.dart';
 import 'package:to_do_app_hive/hive/task_service.dart';
+import 'package:to_do_app_hive/theme/text_style/app_bar.dart';
 import 'package:to_do_app_hive/widgets/snackbar.dart';
 
 class NewTaskScreen extends StatefulWidget {
@@ -29,7 +30,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("New Task"),
+        title: Text("New Task", style: appbarTextStyle,),
         centerTitle: true,
       ),
       body: SingleChildScrollView(

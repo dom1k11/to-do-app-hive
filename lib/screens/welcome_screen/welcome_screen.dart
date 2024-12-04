@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app_hive/screens/welcome_screen/messages.dart';
+import 'package:to_do_app_hive/theme/text_style/app_bar.dart';
 import 'package:to_do_app_hive/widgets/custom_elevated_button.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -34,7 +35,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Welcome"),
+        title: Text("Welcome", style: appbarTextStyle,),
       ),
       body: Center(
         child: Column(

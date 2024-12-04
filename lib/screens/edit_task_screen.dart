@@ -4,6 +4,7 @@ import 'package:to_do_app_hive/screens/new_task_screen/forms/date.dart';
 import 'package:to_do_app_hive/screens/new_task_screen/forms/description.dart';
 import 'package:to_do_app_hive/screens/new_task_screen/forms/name.dart';
 import 'package:to_do_app_hive/screens/new_task_screen/forms/priority_form.dart';
+import 'package:to_do_app_hive/theme/text_style/app_bar.dart';
 import '../models/task_model.dart';
 
 class EditTaskScreen extends StatefulWidget {
@@ -33,7 +34,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Edit Task"),
+        title:  Text("Edit Task", style: appbarTextStyle,),
         centerTitle: true,
       ),
       body: Column(
