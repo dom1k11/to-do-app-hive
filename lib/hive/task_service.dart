@@ -18,6 +18,7 @@ Future<void> addTask(String taskName, String taskDescription,
 
   // Добавляем задачу в коробку
   await tasksBox.add(newTask);
+
   print("New Task added");
   print(tasksBox.values.toList());
 

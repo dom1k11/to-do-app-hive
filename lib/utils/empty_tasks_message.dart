@@ -10,6 +10,8 @@ class EmptyTasksMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double textSize = (screenWidth / 25 ).clamp(12.0, 36.0);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -17,10 +19,13 @@ class EmptyTasksMessage extends StatelessWidget {
           child: AnimatedOpacity(
             opacity: _opacity,
             duration: const Duration(milliseconds: 1000),
-            child: const Text(
-              "You don't have any tasks, want to add a new one?",
-              style: TextStyle(fontSize: 20),
-              textAlign: TextAlign.center,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                "You don't have any tasks, want to add a new one?",
+                style: TextStyle(fontSize: textSize),
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
